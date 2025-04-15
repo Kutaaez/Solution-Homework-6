@@ -8,5 +8,22 @@ public abstract class SupportHandler {
         return next;
     }
 
-    public abstract void handle(String issue);
+    public void handle(String issue) {
+        System.out.println("[" + this.getClass().getSimpleName() + "] Received issue: " + issue);
+        if (!process(issue) && next != null) {
+            System.out.println("[" + this.getClass().getSimpleName() + "] Passing to next handler...");
+            next.handle(issue);
+        } else if (!canHandle(issue) && next == null) {
+            System.out.println("[" + this.getClass().getSimpleName() + "] No handler found for: " + issue);
+
+        }
+    }
+    protected abstract boolean canHandle(String issue);
+    protected boolean process(String issue) {
+        if (canHandle(issue)) {
+            System.out.println("[" + this.getClass().getSimpleName() + "] Handled issue: " + issue);
+            return true;
+        }
+        return false;
+    }
 }

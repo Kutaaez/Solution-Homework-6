@@ -16,8 +16,9 @@ public class TechSupportDemo {
         };
 
         for (String issue : issues) {
+            System.out.println("=== New Issue ===");
             faq.handle(issue);
+            System.out.println();
         }
     }
 }
- 
